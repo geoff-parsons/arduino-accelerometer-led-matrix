@@ -22,3 +22,9 @@ LED Matrix
 ----------
 
 RGB LED Matrix and serial interface from [Sparkfun](http://www.sparkfun.com/commerce/product_info.php?products_id=760).
+
+
+Building
+========
+
+Not much to say - the pins are all configurable via the code. Connect up appropriate data pins, power, and ground.

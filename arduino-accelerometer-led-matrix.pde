@@ -1,4 +1,10 @@
 
+/**
+ * Based on code from the example code for the Memsic2125 in the Arduino examples and the
+ * LED matrix serial controller example code from Sparkfun:
+ *    http://www.sparkfun.com/commerce/product_info.php?products_id=760
+ **/
+
 // Pins
 #define XPIN 2
 #define YPIN 3
@@ -34,37 +40,21 @@ void setup() {
   pinMode(YPIN, INPUT);
   
   // LED Matrix Setup
-  //SPI Bus setup
   SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR1);	//Enable SPI HW, Master Mode, divide clock by 16
-  //Set the pin modes for the RGB matrix
   pinMode(DATAOUT, OUTPUT);
   pinMode(DATAIN, INPUT);
   pinMode(SPICLOCK,OUTPUT);
   pinMode(SLAVESELECT,OUTPUT);
-  
-  //Make sure the RGB matrix is deactivated
   digitalWrite(SLAVESELECT,HIGH);
   
   color_buffer[current_loc] = RED;
-  
-  Serial.begin(9600);
 }
 
 void loop() {
-  // read pulse from x- and y-axes
   pulseX = pulseIn(XPIN,HIGH);  
   pulseY = pulseIn(YPIN,HIGH);
-  
-  // convert the pulse width into acceleration
-  // accX and accY are in milli-g's: earth's gravity is 1000.
   accX = ((pulseX / 10) - 500) * 8;
   accY = ((pulseY / 10) - 500) * 8;
-  
-  // print the acceleration
-  Serial.print(accX);
-  Serial.print(" ");
-  Serial.print(accY);
-  Serial.println();
   
   if(accX > 500)
     move(RIGHT);
@@ -112,7 +102,6 @@ void reset_current() {
 }
 
 void draw() {
-  Serial.println("Writing Frame");
   digitalWrite(SLAVESELECT, LOW);
   delay(10);
   for(int LED=0; LED<64; LED++){
@@ -120,7 +109,6 @@ void draw() {
   }
   delay(10);
   digitalWrite(SLAVESELECT, HIGH);
-  Serial.println("Finished Write");
 }
 
 //Use this command to send a single color value to the RGB matrix.
