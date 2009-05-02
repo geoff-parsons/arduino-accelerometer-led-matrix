@@ -29,6 +29,7 @@
 #define DOWN 2
 #define LEFT 3
 
+char COLOR = TEAL;
 int pulseX, pulseY;
 int accX, accY;
 char color_buffer [64];
@@ -72,21 +73,21 @@ void loop() {
 void move(int dir) {
   if(dir == RIGHT && (current_loc % 8) != 7) {
     reset_current();
-    color_buffer[++current_loc] = RED;
+    color_buffer[++current_loc] = COLOR;
     draw();
   } else if(dir == LEFT && (current_loc % 8) != 0) {
     reset_current();
-    color_buffer[--current_loc] = RED;
+    color_buffer[--current_loc] = COLOR;
     draw();
   } else if(dir == UP && current_loc < 56) {
     reset_current();
     current_loc += 8;
-    color_buffer[current_loc] = RED;
+    color_buffer[current_loc] = COLOR;
     draw();
   } else if(dir == DOWN && current_loc > 7) {
     reset_current();
     current_loc -= 8;
-    color_buffer[current_loc] = RED;
+    color_buffer[current_loc] = COLOR;
     draw();
   }
 }
